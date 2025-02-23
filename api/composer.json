@@ -1,0 +1,8 @@
+{
+    "require": {
+        "phpmailer/phpmailer": "^6.9",
+        "sendgrid/sendgrid": "^8.1",
+        "sendinblue/api-v3-sdk": "^8.4",
+        "brevo/brevo-php": "^1.0"
+    }
+}
