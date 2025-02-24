@@ -1,4 +1,8 @@
-# Site Login
+Segue a documentação atualizada com os novos endpoints de cadastro e transferência:
+
+---
+
+# Site Login  
 Um site extremamente simples de login, contendo painel de administrador, menu de transferência e outros recursos.
 
 ---
@@ -25,7 +29,7 @@ GET http://seuservidor/api/api.php?action=forgot_password&email=seu@email.com
 ```
 ❌ **Erro:**  
 ```json
-{"error": "E-mail não encontrado"}
+{"error": "Usuário não encontrado"}
 ```
 
 ---
@@ -50,6 +54,83 @@ GET http://seuservidor/api/api.php?action=reset_password&email=seu@email.com&cod
 ❌ **Erro:**  
 ```json
 {"error": "Código inválido ou expirado"}
+```
+
+---
+
+# 📝 Endpoints Adicionais
+
+### 👤 3. Cadastro de Usuário  
+Endpoint para cadastro de novos usuários.  
+
+**Método:** `GET`  
+**URL:**  
+```
+GET http://seuservidor/api/api.php?action=cadastrar_usuario&email=seu@email&
+username=seuNome&password=suaSenha&csrf_token=token_valido
+```
+
+📌 **Parâmetros:**  
+- `email` → E-mail do usuário (deve ser único).  
+- `username` → Nome de usuário.  
+- `password` → Senha desejada (será armazenada criptografada).  
+- `csrf_token` → Token de segurança para evitar CSRF (deve ser validado na sessão).  
+
+🔓 **Resposta:**  
+✅ **Sucesso:**  
+```json
+{"message": "Conta criada com sucesso!"}
+```
+❌ **Erro:**  
+```json
+{"error": "Email já cadastrado no banco de dados"}
+```
+ou  
+```json
+{"error": "Token inválido" | "Token não encontrado"}
+```
+
+---
+
+### 💸 4. Transferência de Saldo  
+Endpoint para realizar transferência de saldo entre usuários.  
+**Observação:** É necessário que o usuário esteja logado (informação armazenada em sessão).  
+
+**Método:** `GET`  
+**URL:**  
+```
+GET http://seuservidor/api/api.php?action=transferir&dest_id=ID_Destinatario&amount=valor
+```
+
+📌 **Parâmetros:**  
+- `dest_id` → ID do usuário destinatário.  
+- `amount` → Valor a ser transferido.  
+
+🔓 **Requisitos e Validações:**  
+- O usuário deve estar logado.  
+- Não é permitido transferir para si mesmo.  
+- O usuário deve possuir saldo suficiente para a transferência.  
+
+🔓 **Resposta:**  
+✅ **Sucesso:**  
+```json
+{"message": "Transferência realizada com sucesso"}
+```
+❌ **Erro:**  
+```json
+{"error": "Usuário não logado"}
+```
+ou  
+```json
+{"error": "Você não pode transferir para si mesmo"}
+```
+ou  
+```json
+{"error": "Saldo insuficiente"}
+```
+ou  
+```json
+{"error": "Destinatário não encontrado"}
 ```
 
 ---
@@ -80,4 +161,3 @@ CREATE TABLE `usuarios` (
 ---
 
 Feito com ❤️ por **Raul** 🚀
-
