@@ -1,5 +1,3 @@
-Segue a documentação atualizada com os novos endpoints de cadastro e transferência:
-
 ---
 
 # Site Login  
